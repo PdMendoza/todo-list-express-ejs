@@ -1,0 +1,28 @@
+<%- include("header") -%>
+
+<div class="box" id="heading">
+  <h1> <%= listTitle %> </h1>
+</div>
+
+<div class="box">
+  <% newListItems.forEach(newListItem => { %>
+  <form action="/delete" method="post">
+    <div class="item">
+      <!-- we need to submit the form with the checkbox, but its not type submit -->
+      <!-- so we use this.form.submit to force the submit of the form -->
+      <input type="checkbox" name="checkbox" value="<%= newListItem._id %>" onChange="this.form.submit()">
+      <p><%=  newListItem.name  %></p>
+    </div>
+    <!-- we need to somehow have access to the list name so we know to which list -->
+    <!-- the _id belongs to, for that we use a hidden input -->
+    <input type="hidden" name="listName" value="<%= listTitle %>">
+  </form>
+  <% }) %>
+
+  <form class="item" action="/" method="post">
+    <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+    <button type="submit" name="list" value="<%= listTitle %>">+</button>
+  </form>
+</div>
+
+<%- include("footer") -%>
